@@ -17,21 +17,6 @@
 
 @implementation UIButtonWithBlock
 
-- (void)dealloc
-{
-    [self freeBlocks];
-    [_blockDict release];
-    
-    [super dealloc];
-}
-
-- (void)freeBlocks
-{
-    for (ButtonBlock block in [_blockDict allValues]) {
-        Block_release(block);
-    }
-}
-
 - (void)setBlock:(ButtonBlock)block forControlEvents:(UIControlEvents)event
 {
     if (_blockDict == nil) {
@@ -40,13 +25,7 @@
     
     NSString *eventStr = [self stringFromControlEvent:event];
     
-    if (_blockDict[eventStr]) {
-        ButtonBlock tmp = _blockDict[eventStr];
-        Block_release(tmp);
-    }
-    
-    ButtonBlock _block = Block_copy(block);
-    _blockDict[eventStr] = _block;
+    _blockDict[eventStr] = block;
     
     SEL handler = nil;
     switch (event) {

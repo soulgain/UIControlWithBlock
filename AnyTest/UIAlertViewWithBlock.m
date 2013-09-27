@@ -16,20 +16,6 @@
 
 @implementation UIAlertViewWithBlock
 
-- (void)dealloc
-{
-    [_blockDict release];
-    
-    [super dealloc];
-}
-
-- (void)freeBlocks
-{
-    for (void (^block)() in [_blockDict allValues]) {
-        Block_release(block);
-    }
-}
-
 - (void)setBlock:(void (^)())block forButtonIndex:(NSInteger)index
 {
     self.delegate = self;
@@ -38,12 +24,7 @@
     }
     
     NSString *indexString = [self stringFromButtonIndex:index];
-    if (_blockDict[indexString]) {
-        Block_release(_blockDict[indexString]);
-    }
-    
-    void (^tmp)() = Block_copy(block);
-    _blockDict[indexString] = tmp;
+    _blockDict[indexString] = block;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

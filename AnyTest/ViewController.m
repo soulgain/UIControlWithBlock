@@ -44,7 +44,7 @@
 - (void)testAlert
 {
     NSString *test = @"cancel button";
-    UIAlertViewWithBlock *alert = [[[UIAlertViewWithBlock alloc] initWithTitle:@"title" message:@"msg" delegate:nil cancelButtonTitle:@"111" otherButtonTitles:@"222", nil] autorelease];
+    UIAlertViewWithBlock *alert = [[UIAlertViewWithBlock alloc] initWithTitle:@"title" message:@"msg" delegate:nil cancelButtonTitle:@"111" otherButtonTitles:@"222", nil];
     alert.delegate = alert;
     [alert setBlock:^{
         NSLog(@"%@", test);
